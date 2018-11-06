@@ -1,3 +1,15 @@
+require_relative('../models/customer')
+require_relative('../models/film')
+require_relative('../models/screen')
+require_relative('../models/screening')
+require_relative('../models/ticket')
+
+require('pry')
+
+Customer.delete_all()
+Film.delete_all()
+Screen.delete_all()
+
 customer1 = Customer.new({
   'name' => 'alan',
   'funds' => 1
@@ -39,7 +51,7 @@ film3.save()
 
 screen1 = Screen.new({
   'name' => 'Big Screen',
-  'capacity' => 2
+  'capacity' => 5
   })
 screen1.save()
 
@@ -48,3 +60,49 @@ screen2 = Screen.new({
   'capacity' => 1
   })
 screen2.save()
+
+screening1 = Screening.new({
+  'time_date' => '14:00',
+  'film_id' => film1.id,
+  'screen_id' => screen1.id
+  })
+screening1.save()
+
+screening2 = Screening.new({
+  'time_date' => '14:00',
+  'film_id' => film2.id,
+  'screen_id' => screen1.id
+  })
+screening2.save()
+
+
+#CUSTOMER TESTS
+  customer3.buy_ticket(screening1)
+  customer3.buy_ticket(screening2)
+
+  customer1.buy_ticket(screening1)
+  customer1.buy_ticket(screening2)
+
+
+# FILM TESTS
+
+# film1.screenings()
+# film1.tickets_sold()
+# film1.most_pop_screening()
+binding.pry
+nil
+
+
+# SCREEN TESTS
+#
+# screen1.screenings()
+#
+# SCREENING TESTS
+#
+# screening1.pretty()
+#
+# TICKET TESTS
+#
+# ticket1.get_screening()
+#
+# ticket1.pretty()

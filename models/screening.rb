@@ -1,4 +1,4 @@
-require_relative('../db/SqlRunner')
+require_relative('../db/sql_runner')
 
 class Screening
 
@@ -60,13 +60,15 @@ class Screening
     return SqlRunner.run(sql, values).count
   end
 
-  def tickets_left?()
-    sql = "SELECT * FROM screen WHERE id = $1"
+  def seats()
+    sql = "SELECT * FROM screens WHERE id = $1"
     values = [@screen_id]
-    screen_capacity =  SqlRunner.run(sql, values)[0]['capacity']
-    return tickets_sold() < screen_capacity
+    return  SqlRunner.run(sql, values)[0]['capacity'].to_i
   end
 
+  def seats_left?()
+    return tickets_sold() < seats()
+  end
 
   def get_film_title()
     sql = "SELECT * FROM films WHERE id = $1"
@@ -80,12 +82,14 @@ class Screening
     return SqlRunner.run(sql, values)[0]['name']
   end
 
-  def pretty()
-    return {
-      'Title' => get_film_title()
-      'Time' => @time_date
-      'Screen' => get_screen_name()
+  def info()
+  info =  {
+      "Title" => get_film_title(),
+      "Time" => time_date,
+      "Screen" => get_screen_name(),
+      "Tickets Sold" => "#{tickets_sold()}/#{seats()}"
     }
+    return info
   end
 
 end

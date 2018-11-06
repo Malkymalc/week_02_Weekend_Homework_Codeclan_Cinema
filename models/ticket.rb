@@ -1,6 +1,7 @@
-require_relative('../db/SqlRunner')
+require_relative('../db/sql_runner')
+require('pry')
 
-class Tickets
+class Ticket
 
   attr_accessor :id
   attr_reader :customer_id, :screening_id
@@ -66,11 +67,23 @@ class Tickets
   end
 
   def pretty()
-    return {
-      'Title' => get_film_title()
-      'Time' => get_time_date()
-      'Screen' => get_screen_name()
-    }
+  title = 'bob' #get_film_title()
+  time = 'dave' #@time_date
+  screen = 'chris' #get_screen_name()
+  info =  {}
+    #   "Title" => title,
+    #   "Time" => time,
+    #   "Screen" => screen
+    # }
+    return info
   end
+
+  # def pretty()
+  #   return {
+  #     'Title' => get_film_title()
+  #     'Time' => get_time_date()
+  #     'Screen' => get_screen_name()
+  #   }
+  # end
 
 end

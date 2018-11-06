@@ -1,8 +1,8 @@
 DROP TABLE IF EXISTS tickets;
-DROP TABLE screenings;
-DROP TABLE films;
-DROP TABLE screens;
-DROP TABLE customers;
+DROP TABLE IF EXISTS screenings;
+DROP TABLE IF EXISTS films;
+DROP TABLE IF EXISTS screens;
+DROP TABLE IF EXISTS customers;
 
 CREATE TABLE customers (
   id SERIAL4 PRIMARY KEY,

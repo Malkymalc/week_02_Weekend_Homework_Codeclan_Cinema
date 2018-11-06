@@ -1,4 +1,4 @@
-require_relative('../db/SqlRunner')
+require_relative('../db/sql_runner')
 
 class Film
 
@@ -23,7 +23,7 @@ class Film
 
   def self.select_all()
     sql = "SELECT * FROM films"
-    films = SqlRunner.run(sql, values)
+    films = SqlRunner.run(sql)
     return films.map { |film| Film.new(film) }
   end
 
@@ -52,18 +52,18 @@ class Film
     sql = "SELECT * FROM screenings
           WHERE screenings.film_id = $1"
     values = [@id]
-    screenings_sql =  SqlRunner.run(sql, values)
-    return screenings.map { |screening| Screening.new(screening).pretty() }
+    screenings =  SqlRunner.run(sql, values)
+    return screenings.map { |screening| Screening.new(screening).info() }
   end
 
 
   def tickets_sold()
     sql = "SELECT tickets.* FROM tickets
           INNER JOIN screenings
-          ON tickets.screening_id = screening.id
+          ON tickets.screening_id = screenings.id
           INNER JOIN films
-          ON screenings.film_id = film.id
-          WHERE film.id = $1"
+          ON screenings.film_id = films.id
+          WHERE films.id = $1"
     values = [@id]
     return SqlRunner.run(sql, values).count
   end
@@ -73,10 +73,8 @@ class Film
           WHERE screenings.film_id = $1"
     values = [@id]
     screenings_sql =  SqlRunner.run(sql, values)
-    screenings_pretty = screenings.map { |screening|
-      Screening.new(screening).pretty()
-    }
-    return screenings_pretty.map { |screening| screening.tickets_sold() }
+    screenings = screenings_sql.map { |screening| Screening.new(screening) }
+    return screenings.sort_by { |screening| screeing.tickets_sold() }
   end
 
 end

@@ -1,4 +1,4 @@
-require_relative('../db/SqlRunner')
+require_relative('../db/sql_runner')
 
 class Screen
 
@@ -7,8 +7,8 @@ class Screen
 
   def initialize( options )
     @id = options['id'].to_i if options['id']
-    @name = options['title']
-    @capacity = options['cost'].to_i
+    @name = options['name']
+    @capacity = options['capacity'].to_i
   end
 
   def save()
@@ -22,7 +22,7 @@ class Screen
 
   def self.select_all()
     sql = "SELECT * FROM screens"
-    screens = SqlRunner.run(sql, values)
+    screens = SqlRunner.run(sql)
     return screens.map { |screen| Screen.new(screen) }
   end
 
@@ -49,7 +49,7 @@ class Screen
 
   def screenings()
     sql = "SELECT * FROM screenings
-          WHERE screenings.film_id = $1"
+          WHERE screenings.screen_id = $1"
     values = [@id]
     screenings_sql =  SqlRunner.run(sql, values)
     return screenings.map { |screening| Screening.new(screening).pretty() }

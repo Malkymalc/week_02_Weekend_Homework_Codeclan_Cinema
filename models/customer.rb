@@ -1,4 +1,6 @@
-require_relative('../db/SqlRunner')
+require_relative('../db/sql_runner')
+require_relative('./ticket')
+require('pry')
 
 class Customer
 
@@ -22,7 +24,7 @@ class Customer
 
    def self.select_all()
      sql = "SELECT * FROM customers"
-     customers = SqlRunner.run(sql, values)
+     customers = SqlRunner.run(sql)
      return customers.map { |customer| Customer.new(customer) }
    end
 
@@ -62,14 +64,18 @@ class Customer
   end
 
   def pay_money(cost)
-    @funds - cost
+    @funds -= cost
     update()
     return cost
   end
 
   def buy_ticket(screening)
-    if screening.tickets_left?() && can_afford?(screening.get_cost())
-      ticket = Ticket.new(@id, screening.id)
+    if screening.seats_left?() && can_afford?(screening.get_cost())
+      pay_money(screening.get_cost())
+      ticket = Ticket.new({
+        'customer_id' => @id,
+        'screening_id' => screening.id
+        })
       ticket.save()
     end
   end
