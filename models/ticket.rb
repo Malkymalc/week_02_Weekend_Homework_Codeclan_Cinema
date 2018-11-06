@@ -66,24 +66,17 @@ class Ticket
     return get_screening.time_date
   end
 
-  def pretty()
-  title = 'bob' #get_film_title()
-  time = 'dave' #@time_date
-  screen = 'chris' #get_screen_name()
-  info =  {}
-    #   "Title" => title,
-    #   "Time" => time,
-    #   "Screen" => screen
-    # }
+  def info()
+  title = get_film_title()
+  time = time_date
+  screen = get_screen_name()
+  info =  {
+      "Title" => title,
+      "Time" => time,
+      "Screen" => screen
+    }
     return info
   end
 
-  # def pretty()
-  #   return {
-  #     'Title' => get_film_title()
-  #     'Time' => get_time_date()
-  #     'Screen' => get_screen_name()
-  #   }
-  # end
 
 end

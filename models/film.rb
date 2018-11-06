@@ -74,7 +74,7 @@ class Film
     values = [@id]
     screenings_sql =  SqlRunner.run(sql, values)
     screenings = screenings_sql.map { |screening| Screening.new(screening) }
-    return screenings.sort_by { |screening| screeing.tickets_sold() }
+    return screenings.sort_by { |screening| screening.tickets_sold() }.last.info()
   end
 
 end

@@ -75,6 +75,12 @@ screening2 = Screening.new({
   })
 screening2.save()
 
+screening3 = Screening.new({
+  'time_date' => '18:00',
+  'film_id' => film1.id,
+  'screen_id' => screen1.id
+  })
+screening3.save()
 
 #CUSTOMER TESTS
   customer3.buy_ticket(screening1)
@@ -91,18 +97,3 @@ screening2.save()
 # film1.most_pop_screening()
 binding.pry
 nil
-
-
-# SCREEN TESTS
-#
-# screen1.screenings()
-#
-# SCREENING TESTS
-#
-# screening1.pretty()
-#
-# TICKET TESTS
-#
-# ticket1.get_screening()
-#
-# ticket1.pretty()
